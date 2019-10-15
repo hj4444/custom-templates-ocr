@@ -12,6 +12,7 @@ import com.qk365.ocr.model.dto.R;
 import com.qk365.ocr.model.dto.ResultCodeEnum;
 import com.qk365.ocr.service.OcrService;
 import com.qk365.ocr.util.ApplicationContextUtil;
+import com.qk365.ocr.util.Base64Util;
 import com.qk365.ocr.util.CollectionUtil;
 import feign.*;
 import feign.httpclient.ApacheHttpClient;
@@ -23,9 +24,10 @@ import java.util.List;
 @Slf4j
 public class AliyunOcrServiceImpl implements OcrService {
     private static AliyunFeignClient aliyunFeignClient;
+    private static OcrConfig ocrConfig;
 
     static {
-        OcrConfig ocrConfig = ApplicationContextUtil.getBean(OcrConfig.class);
+        ocrConfig = ApplicationContextUtil.getBean(OcrConfig.class);
         aliyunFeignClient = Feign.builder().client(new ApacheHttpClient()).errorDecoder(new FeignErrorInterceptor()).requestInterceptor(new AliyunAuthRestInterceptor(ocrConfig))
                 .contract(new Contract.Default()).logLevel(Logger.Level.FULL).logger(new Slf4jLogger(log.getClass()))
                 .options(new Request.Options(3000, 5000)).retryer(new Retryer.Default(5000, 5000, 3))
@@ -34,6 +36,10 @@ public class AliyunOcrServiceImpl implements OcrService {
 
     @Override
     public R getTemplateOcrResponse(String templateId, String imageBase64, OcrTemplateBo ocrTemplate) {
+        Integer imageSize = Base64Util.getImageSize(imageBase64);
+        if (ocrConfig.getAliyun().getImageSize() < imageSize) {
+            return R.fail(ResultCodeEnum.IMAGE_TOO_LARGE_ERROR);
+        }
         JSONObject requestObj = new JSONObject();
         requestObj.put("image", imageBase64);
         JSONObject configObj = new JSONObject();

@@ -80,7 +80,9 @@ public class OcrTemplateServiceImpl implements OcrTemplateService {
                 log.error(LogUtil.getPrintExceptionString(e));
             }
             R result = ocrService.getTemplateOcrResponse(templateId, imageBase64, ocrTemplate);
-            loggerService.SenderLog(new OcrOpLog(templateId, result.getData().toString(), ocrTemplate.getOcrType()));
+            if (result.isSuccess()) {
+                loggerService.SenderLog(new OcrOpLog(templateId, result.getData().toString(), ocrTemplate.getOcrType()));
+            }
             return result;
         } else {
             return R.fail(String.format("没有获取到该%s ocr模版信息", templateId));
@@ -95,5 +97,4 @@ public class OcrTemplateServiceImpl implements OcrTemplateService {
     public R getTemplateOcrFallback(String templateId, String imageBase64) {
         return R.fail(ResultCodeEnum.NOT_FOUND);
     }
-
 }

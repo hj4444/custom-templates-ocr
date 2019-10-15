@@ -13,6 +13,7 @@ public enum ResultCodeEnum implements ResultCode {
 	REQ_REJECT(HttpStatus.FORBIDDEN.value(), "请求被拒绝"),
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器异常"),
 	PARAM_ERROR(501, "参数错误"),
+	IMAGE_TOO_LARGE_ERROR(503, "上传图片太大"),
 	SQL_ERROR(502, "SQL错误");
 	final int code;
 	final String message;

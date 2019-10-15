@@ -16,6 +16,8 @@ public class OcrConfig {
     public static class Aliyun {
         private String apiUrl;
         private String appCode;
+        /* 单位是b */
+        private Integer imageSize;
     }
 
     @Setter
@@ -24,6 +26,8 @@ public class OcrConfig {
         private String apiUrl;
         private String apiKey;
         private String apiSecret;
+        /* 单位是b */
+        private Integer imageSize;
     }
 }
 

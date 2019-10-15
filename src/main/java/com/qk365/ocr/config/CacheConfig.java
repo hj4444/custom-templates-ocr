@@ -25,7 +25,7 @@ public class CacheConfig {
         for (Caches c : Caches.values()) {
             caches.add(new CaffeineCache(c.name(),
                     Caffeine.newBuilder().recordStats()
-                            .expireAfterWrite(c.getTtl(), TimeUnit.SECONDS)
+                            .expireAfterWrite(c.getTtl(), TimeUnit.MINUTES)
                             .maximumSize(c.getMaxSize())
                             .build())
             );
@@ -35,7 +35,7 @@ public class CacheConfig {
     }
 
     public enum Caches {
-        getAllOcrTemplates(600);
+        getAllOcrTemplates(60);
 
         private int maxSize = DEFAULT_MAXSIZE;
         private int ttl = DEFAULT_TTL;

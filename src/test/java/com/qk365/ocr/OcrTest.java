@@ -26,7 +26,7 @@ public class OcrTest {
     private OcrTemplateService ocrTemplateService;
     @Test
     public void AliyunOcrTest(){
-        String imageBase64 = Base64Util.getImageStr("D:\\work\\文档\\公共事业缴费\\南京凭证\\江宁\\20190821_IMG_1709.PNG");
+        String imageBase64 = Base64Util.getImageStr("D:\\work\\文档\\青客宝系统介绍 - 陈伟.pptx");
         R res = ocrTemplateService.getTemplateOcrResponse("c9dc30ea-aace-414b-832b-d0c2778d140e1558941207", imageBase64);
         Assert.assertNotNull(res);
     }

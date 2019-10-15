@@ -14,6 +14,7 @@ import com.qk365.ocr.model.dto.ResultCodeEnum;
 import com.qk365.ocr.model.dto.faceplusplus.RecognizeTextResp;
 import com.qk365.ocr.service.OcrService;
 import com.qk365.ocr.util.ApplicationContextUtil;
+import com.qk365.ocr.util.Base64Util;
 import com.qk365.ocr.util.CollectionUtil;
 import feign.*;
 import feign.httpclient.ApacheHttpClient;
@@ -39,6 +40,10 @@ public class FacePlusPlusOcrServiceImpl implements OcrService {
 
     @Override
     public R getTemplateOcrResponse(String templateId, String imageBase64, OcrTemplateBo ocrTemplate) {
+        Integer imageSize = Base64Util.getImageSize(imageBase64);
+        if (ocrConfig.getFacePlusPlus().getImageSize() < imageSize) {
+            return R.fail(ResultCodeEnum.IMAGE_TOO_LARGE_ERROR);
+        }
         HashMap<String, String> param = Maps.newHashMap();
         param.put("image_base64", imageBase64);
         param.put("template_id", templateId.toLowerCase());
