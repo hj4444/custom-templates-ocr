@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  custom-templates-ocr:
+    image: 192.168.1.149/ocr/custom-templates-ocr:1.0.0.0_20191012074835
+    privileged: true
+    network_mode: "host"
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -verbose:gc -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xmx2048m -Xms2048m -XX:MaxMetaspaceSize=512m
+        -XX:MetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/qingke/oom/
+        -Dcsp.sentinel.heartbeat.client.ip=192.168.102.185
+       -Dlog.path=/qingke/logs/ -Dapp.id=custom-templates-ocr -Denv=DEV -Dapollo.meta=http://192.168.1.92:18000 -Dapollo.cacheDir=/qingke/appsconfig/
+
+    ports:
+      - '8080:8080'
+    volumes:
+      - /qingke/logs/custom-templates-ocr/:/qingke/logs/custom-templates-ocr/
+      - /qingke/appsconfig/custom-templates-ocr/:/qingke/appsconfig/custom-templates-ocr/
+

@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: dev
+management:
+  endpoints:
+    web:
+      exposure:
+        include=*:
+
+app:
+  id: custom-templates-ocr
+
+apollo:
+  meta: http://192.168.1.92:18000
+  bootstrap:
+    enabled: true
+    eagerLoad:
+      enabled: true
+
+logging:
+  config: classpath:logback-spring.xml

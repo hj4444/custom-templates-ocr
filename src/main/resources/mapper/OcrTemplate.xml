@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qk365.ocr.mapper.OcrTemplateMapper">
+    <resultMap id="OcrTemplatesResultMap" type="com.qk365.ocr.model.bean.OcrTemplate" >
+        <id column="response_schema" property="tplRespSchemaJsonArray" jdbcType="VARCHAR" typeHandler="com.qk365.ocr.config.handler.MySqlJsonArrayHandler"/>
+    </resultMap>
+    <select id="getAllOcrTemplates" resultMap="OcrTemplatesResultMap" >
+            SELECT tc.template_id,tc.ocr_type,tr.response_schema
+            FROM `template_config` tc
+            INNER JOIN template_response tr
+            on tc.template_response_id=tr.id
+        </select>
+</mapper>
