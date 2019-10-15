@@ -95,6 +95,6 @@ public class OcrTemplateServiceImpl implements OcrTemplateService {
     }
 
     public R getTemplateOcrFallback(String templateId, String imageBase64) {
-        return R.fail(ResultCodeEnum.NOT_FOUND);
+        return R.fail(ResultCodeEnum.INTERNAL_SERVER_ERROR);
     }
 }
