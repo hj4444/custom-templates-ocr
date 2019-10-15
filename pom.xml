@@ -205,7 +205,7 @@
                             <ports>
                                 <port>8080</port>
                             </ports>
-                            <user>root:root</user>
+                            <user>1000:1000</user>
                         </container>
                     </configuration>
                 </plugin>
