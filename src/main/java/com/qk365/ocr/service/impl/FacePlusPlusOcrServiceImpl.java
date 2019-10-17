@@ -57,7 +57,9 @@ public class FacePlusPlusOcrServiceImpl implements OcrService {
     private JSONObject buildOcrSchemaObject(OcrTemplateBo ocrTemplate, RecognizeTextResp recognizeTextResp) {
         JSONObject jsonObject = new JSONObject();
         List<TemplateResponseSchema> templateResponseSchemaList = ocrTemplate.getTemplateResponseSchemaList();
-        if (CollectionUtil.isEmpty(templateResponseSchemaList)) return jsonObject;
+        if (CollectionUtil.isEmpty(templateResponseSchemaList)) {
+            return jsonObject;
+        }
         templateResponseSchemaList.stream().forEach(schema -> {
             jsonObject.put(schema.getFieldName(), recognizeTextResp.getTextByKey(schema.getFieldName()));
         });

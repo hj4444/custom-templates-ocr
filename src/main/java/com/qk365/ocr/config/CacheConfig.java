@@ -68,5 +68,4 @@ public class CacheConfig {
             this.ttl = ttl;
         }
     }
-
 }

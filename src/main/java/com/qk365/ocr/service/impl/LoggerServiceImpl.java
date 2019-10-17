@@ -26,7 +26,7 @@ public class LoggerServiceImpl implements LoggerService, DisposableBean, Initial
     private OcrOpLogMapper ocrOpLogMapper;
 
     @Override
-    public void SenderLog(OcrOpLog ocrOpLog) {
+    public void senderLog(OcrOpLog ocrOpLog) {
         RingBuffer<LoggerEvent> ringBuffer = disruptor.getRingBuffer();
         ringBuffer.publishEvent((event, sequence, data) -> event.setOcrOpLog(data), ocrOpLog);
     }

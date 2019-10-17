@@ -75,34 +75,39 @@ public class ClassUtil {
             } catch (Exception e) {
             }
 
-            if ((cls == null) && (classLoader != null))
+            if ((cls == null) && (classLoader != null)) {
                 try {
                     cls = classLoader.loadClass(className);
                 } catch (Exception e) {
                 }
+            }
 
-            if (cls == null)
+            if (cls == null) {
                 try {
                     cls = ClassUtil.class.getClassLoader().loadClass(className);
                 } catch (Exception e) {
                 }
+            }
 
-            if (cls == null)
+            if (cls == null) {
                 try {
                     cls = Thread.currentThread().getContextClassLoader().loadClass(className);
                 } catch (Exception e) {
                 }
+            }
 
-            if (cls == null)
+            if (cls == null) {
                 try {
                     cls = ClassLoader.getSystemClassLoader().loadClass(className);
                 } catch (Exception e) {
                 }
+            }
 
             if (cls != null) {
                 classes.put(className, cls);
-            } else
+            } else {
                 throw new RuntimeException("Unable to load class '" + className + "'");
+            }
 
         }
 
@@ -136,12 +141,13 @@ public class ClassUtil {
                     list.add(name);
                     patterns.put(qualifiedNamespace, list);
                 }
-            } else if (name.equals("*")) {
+            } else if ("*".equals(name)) {
                 patterns.put(qualifiedNamespace, "*");
             } else {
                 list = (List) object;
-                if (!(list.contains(object)))
+                if (!(list.contains(object))) {
                     list.add(name);
+                }
             }
         }
     }
@@ -151,10 +157,12 @@ public class ClassUtil {
 
         String name = className.substring(className.lastIndexOf(46) + 1).trim();
         Object object = patterns.get(qualifiedNamespace);
-        if (object == null)
+        if (object == null) {
             return true;
-        if ("*".equals(object))
+        }
+        if ("*".equals(object)) {
             return false;
+        }
         if (patterns.containsKey("*")) {
             return true;
         }

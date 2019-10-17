@@ -44,12 +44,12 @@ public class AliyunOcrServiceImpl implements OcrService {
         requestObj.put("image", imageBase64);
         JSONObject configObj = new JSONObject();
         configObj.put("template_id", templateId.toLowerCase());
-        String config_str = configObj.toString();
-        requestObj.put("configure", config_str);
+        String configStr = configObj.toString();
+        requestObj.put("configure", configStr);
         String bodys = requestObj.toString();
         String res = aliyunFeignClient.getOcrTemplateInfo(bodys);
-        JSONObject res_obj = JSON.parseObject(res);
-        JSONObject itemsObj = (JSONObject) res_obj.get("items");
+        JSONObject resObj = JSON.parseObject(res);
+        JSONObject itemsObj = (JSONObject) resObj.get("items");
         JSONObject schemaObj = this.buildOcrSchemaObject(ocrTemplate, itemsObj);
         return R.success(ResultCodeEnum.SUCCESS).data(schemaObj);
     }
@@ -57,7 +57,9 @@ public class AliyunOcrServiceImpl implements OcrService {
     private JSONObject buildOcrSchemaObject(OcrTemplateBo ocrTemplate, JSONObject itemsObj) {
         JSONObject jsonObject = new JSONObject();
         List<TemplateResponseSchema> templateResponseSchemaList = ocrTemplate.getTemplateResponseSchemaList();
-        if (CollectionUtil.isEmpty(templateResponseSchemaList)) return jsonObject;
+        if (CollectionUtil.isEmpty(templateResponseSchemaList)) {
+            return jsonObject;
+        }
         templateResponseSchemaList.stream().forEach(schema -> {
             jsonObject.put(schema.getFieldName(), itemsObj.getString(schema.getFieldName()));
         });

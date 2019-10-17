@@ -15,8 +15,9 @@ public class LoggerStartupListener extends ContextAwareBase
 
     @Override
     public void start() {
-        if (started)
+        if (started) {
             return;
+        }
         String logPath = System.getProperty("log.path");
         Context context = getContext();
         context.putProperty("LOG_PATH", logPath);

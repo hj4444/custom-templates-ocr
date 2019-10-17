@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author hj
+ */
 @Slf4j
 @Service
 public class OcrTemplateServiceImpl implements OcrTemplateService {
@@ -63,6 +66,7 @@ public class OcrTemplateServiceImpl implements OcrTemplateService {
         return ocrTemplateBoList;
     }
 
+    @Override
     @SentinelResource(value = "template.ocr.rule", blockHandler = "getTemplateOcrBlockHandler", fallback = "getTemplateOcrFallback")
     public R getTemplateOcrResponse(String templateId, String imageBase64) {
         List<OcrTemplateBo> ocrTemplateList = getAllOcrTemplates();
@@ -81,7 +85,7 @@ public class OcrTemplateServiceImpl implements OcrTemplateService {
             }
             R result = ocrService.getTemplateOcrResponse(templateId, imageBase64, ocrTemplate);
             if (result.isSuccess()) {
-                loggerService.SenderLog(new OcrOpLog(templateId, result.getData().toString(), ocrTemplate.getOcrType()));
+                loggerService.senderLog(new OcrOpLog(templateId, result.getData().toString(), ocrTemplate.getOcrType()));
             }
             return result;
         } else {
